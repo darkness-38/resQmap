@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konum ve Bilgi Kaydet</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <!-- Üst Menü -->
+    <div class="top-nav">
+        <button onclick="location.href='/home'">Ana Sayfa</button>
+        <button onclick="location.href='/show-locations'">Harita</button>
+        <button onclick="location.href='/location'">Konum Ekle</button>
+        <button onclick="location.href='/about'">Hakkında</button>
+    </div>
+
+    <div class="form-container">
+        <img src="https://cdn-icons-png.flaticon.com/512/854/854878.png" alt="Location Icon">
+        <form id="locationForm">
+            <h2>Kullanıcı Konumu ve Bilgisi</h2>
+            <div class="form-group">
+                <label for="tc">TC Kimlik Numarası:</label>
+                <input type="text" id="tc" name="tc" required placeholder="TC Kimlik Numarasını girin">
+            </div>
+            <div class="form-group">
+                <label for="info">Bilgi:</label>
+                <input type="text" id="info" name="info" placeholder="Konum hakkında bilgi girin">
+            </div>
+            <button type="button" onclick="getLocation()">Konum ve Bilgiyi Kaydet</button>
+            <p id="status"></p>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <footer>
+            © 2024 ResQMap - Tüm hakları saklıdır.
+        </footer>
+    </div>
+
+    <script>
+        function getLocation() {
+            const tc = document.getElementById("tc").value;
+            if (!tc) {
+                document.getElementById('status').textContent = "Lütfen TC Kimlik Numaranızı girin.";
+                return;
+            }
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(sendLocation, showError);
+            } else {
+                document.getElementById('status').textContent = "Geolocation bu tarayıcıda desteklenmiyor.";
+            }
+        }
+
+        function sendLocation(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const tc = document.getElementById("tc").value;
+            const info = document.getElementById('info').value;
+
+            fetch('/save-location', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    latitude: latitude,
+                    longitude: longitude,
+                    info: info,
+                    tc: tc
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Bu kişi zaten kayıtlı !!!');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('status').textContent = 'Konum ve bilgi başarıyla kaydedildi!';
+                    document.getElementById('info').value = '';
+                    document.getElementById("tc").value = "";
+                })
+                .catch((error) => {
+                    document.getElementById('status').textContent = error.message;
+                });
+        }
+
+        function showError(error) {
+            document.getElementById('status').textContent = "Konum alınamadı: " + error.message;
+        }
+    </script>
+</body>
+
+</html>

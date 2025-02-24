@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Kaydedilen Konumları ve Bilgileri Göster</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/css/mapstyles.css" /> <!-- CSS dosyanızı bağlayın -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <button class="toggle-btn" id="toggle-btn">☰</button>
+    <div class="sidebar" id="sidebar">
+        <h2>Menü</h2>
+        <ul>
+            <li><a href="http://localhost:3000/home">Ana Sayfa</a></li>
+            <li><a href="http://localhost:3000/location">Konum Ekle</a></li>
+            <li><a href="http://localhost:3000/show-locations">Haritayı Göster</a></li>
+            <li><a href="http://localhost:3000/about">Hakkında</a></li>
+        </ul>
+    </div>
+
+    <!-- Content -->
+    <div class="content" id="content">
+        <h1>Harita Görüntüleme Sistemi</h1>
+        <div class="description">
+            Bu sayfa, kaydedilen konumları ve ilgili bilgileri bir harita üzerinde görüntülemek için tasarlanmıştır. 
+            Aşağıda bulunan haritayı keşfederek farklı konumlar hakkında bilgi alabilirsiniz.
+        </div>
+        <div id="map"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        © 2024 ResQMap - Tüm hakları saklıdır.
+    </footer>
+
+    <script>
+        // Leaflet Haritası
+        var map = L.map('map').setView([39.92077, 32.85411], 6);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        fetch('/get-locations')
+            .then(response => response.json())
+            .then(locations => {
+                locations.forEach(location => {
+                    var marker = L.marker([location.latitude, location.longitude]).addTo(map);
+                    if (location.info) {
+                        marker.bindPopup(location.info);
+                    }
+                });
+            })
+            .catch(error => console.log('Error:', error));
+
+        // Sidebar Aç/Kapat İşlevi
+        const toggleBtn = document.getElementById('toggle-btn');
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            content.classList.toggle('expanded');
+            
+            // Harita boyutunu yeniden hesapla
+            setTimeout(() => {
+                map.invalidateSize();
+            }, 300);
+        });
+    </script>
+</body>
+
+</html>

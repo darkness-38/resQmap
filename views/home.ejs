@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResQMap - Yenilikçi Harita Sistemi</title>
+    <link rel="stylesheet" href="/css/homePage.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="http://localhost:3000/location">Konum Ekle</a></li>
+            <li><a href="http://localhost:3000/show-locations">Haritayı Göster</a></li>
+            <li><a href="http://localhost:3000/about">Hakkında</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section (Ana ekran) -->
+    <header id="home" class="hero">
+        <h1>Hoşgeldiniz!</h1>
+        <p>Bu sistem sayesinde olası bir deprem/afet anında yardıma ihtiyacı olan insanlara yardım etmek daha kolay ve güvenilir olacaktır. 
+            Tek yapmanız gereken acil durum altındaysanız konum eklemeniz ve bu kadar!
+            Bu sistem girilen konumları tc kimlik numarası ile birlikte bir veritabanına kaydeder ve sonradan bu konumların görülmesini sağlar.
+            Bu sayede ilgili ekipler nerede yardıma ihtiyacı olan kişilerin olduğunu tespit edip ona göre hareket edebiliriler.</p>
+        <button class="btn" id="aboutButton">Hakkımızda</button>
+
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h2>Ekibimiz:</h2>
+        <p><b>Baki TURAN, Murat CANLI, Hamza Mert DAŞDEMİR, Enes ŞAHİN</b></p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 ResQMap - Tüm hakları saklıdır.</p>
+    </footer>
+    <script>
+        document.getElementById('aboutButton').onclick = function() {
+            window.location.href = 'http://localhost:3000/about';
+        };
+    </script>
+</body>
+</html>
