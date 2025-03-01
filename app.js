@@ -16,9 +16,10 @@ app.use("/", locationRoute)
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
-        console.log("Mongoose is running")
+        console.log("Successfully connected to MongoDB database!")
     })
     .catch((err) => {
+        console.log("An error occured while trying to connect to MongoDB database:")
         console.log(err)
     })
 

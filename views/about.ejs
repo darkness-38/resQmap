@@ -54,6 +54,7 @@
                 <h2>Geliştirici</h2>
                 <p>Bu uygulama, modern web teknolojilerini kullanarak konum tabanlı görselleştirme deneyimi sağlamak amacıyla geliştirilmiştir.</p>
                 <p>Ekip üyesi: <b>Baki Turan, Murat Canlı, Hamza Mert Daşdemir, Enes Şahin</b></p>
+                <p>Kaynak kodları için <a href="https://github.com/darkness-38/resQmap"><b>buraya</b></a> tıklayın.</p>
             </section>
         </main>
 
@@ -71,6 +72,32 @@
             sidebar.classList.toggle("open");
         });
     </script>
+
+<script src='https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js'></script>
+<script>
+  window.addEventListener("DOMContentLoaded", function() {
+    window.AgentInitializer.init({
+      agentRenderURL: "https://agent.jotform.com/01955301313c77eba586053eb747c3f6d40a",
+      rootId: "JotformAgent-01955301313c77eba586053eb747c3f6d40a",
+      formID: "01955301313c77eba586053eb747c3f6d40a",
+      queryParams: ["skipWelcome=1", "maximizable=1"],
+      isDraggable: false,
+      background: "linear-gradient(180deg, #6C73A8 0%, #6C73A8 100%)",
+      buttonBackgroundColor: "#0066C3",
+      buttonIconColor: "#FFFFFF",
+      variant: false,
+      customizations: {
+        "greeting": "Yes",
+        "greetingMessage": "Merhaba! Nasıl yardımcı olabilirim?",
+        "openByDefault": "No",
+        "pulse": "No",
+        "position": "right",
+        "autoOpenChatIn": "0"
+      },
+      isVoice: undefined
+    });
+  });
+</script>
 </body>
 
 </html>
